@@ -1,0 +1,8 @@
+/build*/
+/.tools/
+/reference/
+/managed_components/
+/sdkconfig
+/sdkconfig.old
+/.idea/
+__pycache__/

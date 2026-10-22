@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "idf": "5.5.1",
+  "target": "esp32s3",
+  "host_checks": 752,
+  "host_result": "passed",
+  "hardware_tested": false,
+  "artifacts": [
+    {
+      "mode": "xinput",
+      "bytes": 941584,
+      "sha256": "01dceb2df68175ca5b5a92fac88222ad9e2cfbc8a72b1829d583ba33508c6fd7"
+    },
+    {
+      "mode": "hid",
+      "bytes": 945408,
+      "sha256": "77f47e54a994a5d2958a4f5cdd307a40d5d2724c8fdea9d09f51470cc445d9e6"
+    }
+  ],
+  "physical_flash": {
+    "mode": "xinput",
+    "port": "COM5",
+    "chip": "ESP32-S3 revision v0.2",
+    "result": "passed; all written hashes verified",
+    "xinput_enumeration_verified": false,
+    "input_tests_performed": false
+  }
+}

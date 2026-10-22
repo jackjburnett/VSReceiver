@@ -1,0 +1,20 @@
+menu "VSLink receiver"
+choice VSLINK_USB_MODE
+    prompt "USB gamepad identity"
+    default VSLINK_USB_XINPUT
+config VSLINK_USB_XINPUT
+    bool "Xbox 360 XInput (private testing)"
+config VSLINK_USB_HID
+    bool "Generic HID gamepad"
+endchoice
+config VSLINK_QUEUE_DEPTH
+    int "Queued commands"
+    range 4 256
+    default 64
+config VSLINK_HID_VID
+    hex "HID VID (replace with your assigned ID for distribution)"
+    default 0xCAFE
+config VSLINK_HID_PID
+    hex "HID PID (development only)"
+    default 0x4010
+endmenu

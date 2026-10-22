@@ -1,0 +1,61 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "xinput",
+      "displayName": "ESP-IDF Xbox XInput",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-xinput",
+      "cacheVariables": {
+        "IDF_TARGET": "esp32s3",
+        "SDKCONFIG": "${sourceDir}/build-xinput/sdkconfig"
+      }
+    },
+    {
+      "name": "hid",
+      "displayName": "ESP-IDF generic HID",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-hid",
+      "cacheVariables": {
+        "IDF_TARGET": "esp32s3",
+        "SDKCONFIG": "${sourceDir}/build-hid/sdkconfig",
+        "SDKCONFIG_DEFAULTS": "sdkconfig.defaults;sdkconfig.hid"
+      }
+    },
+    {
+      "name": "host-tests",
+      "displayName": "Desktop C++17 tests",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-host-preset",
+      "cacheVariables": {
+        "VSLINK_HOST_TESTS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "xinput",
+      "configurePreset": "xinput",
+      "jobs": 4
+    },
+    {
+      "name": "hid",
+      "configurePreset": "hid",
+      "jobs": 4
+    },
+    {
+      "name": "host-tests",
+      "configurePreset": "host-tests",
+      "jobs": 4
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "host-tests",
+      "configurePreset": "host-tests",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

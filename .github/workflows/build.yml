@@ -1,0 +1,35 @@
+name: Firmware and protocol tests
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build-host -DVSLINK_HOST_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build build-host --parallel 4
+      - run: ctest --test-dir build-host --output-on-failure
+  firmware:
+    runs-on: ubuntu-latest
+    container: espressif/idf:v5.5.1
+    strategy:
+      matrix:
+        mode: [xinput, hid]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build selected USB mode
+        shell: bash
+        run: |
+          . /opt/esp/idf/export.sh
+          defaults=sdkconfig.defaults
+          if [ "${{ matrix.mode }}" = hid ]; then defaults="sdkconfig.defaults;sdkconfig.hid"; fi
+          idf.py -B build -D "SDKCONFIG_DEFAULTS=$defaults" reconfigure
+          cmake --build build --parallel 4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.mode }}
+          path: |
+            build/*.bin
+            build/*.elf
+            build/bootloader/bootloader.bin
+            build/partition_table/partition-table.bin
+            build/flasher_args.json
